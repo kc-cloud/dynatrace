@@ -116,12 +116,15 @@ class DynatraceClient:
 
             # Filter by cluster and namespace
             matched_entities = []
+            cluster_only_matches = []
 
             for entity in all_entities:
                 tags = entity.get('tags', [])
 
                 cluster_match = False
                 namespace_match = False
+                cluster_tag_info = None
+                namespace_tag_info = None
 
                 for tag in tags:
                     tag_key = tag.get('key', '')
@@ -129,21 +132,42 @@ class DynatraceClient:
 
                     # Check for cluster match (case-insensitive, handles prefixes like "AKS Cluster: ")
                     if 'cluster' in tag_key.lower():
+                        cluster_tag_info = f"{tag_key}={tag_value}"
                         # Match if cluster_name appears in the tag value
                         if cluster_name.lower() in tag_value.lower():
                             cluster_match = True
 
-                    # Check for namespace match
+                    # Check for namespace match (flexible - substring match)
                     if 'namespace' in tag_key.lower():
-                        # Exact match for namespace (case-insensitive)
-                        if namespace.lower() == tag_value.lower():
+                        namespace_tag_info = f"{tag_key}={tag_value}"
+                        # Match if namespace appears in the tag value
+                        if namespace.lower() in tag_value.lower():
                             namespace_match = True
+
+                # Track entities that match only cluster (for debugging)
+                if cluster_match:
+                    cluster_only_matches.append({
+                        'name': entity.get('displayName', 'N/A'),
+                        'cluster_tag': cluster_tag_info,
+                        'namespace_tag': namespace_tag_info,
+                        'namespace_match': namespace_match
+                    })
 
                 # Add entity if both cluster and namespace match
                 if cluster_match and namespace_match:
                     matched_entities.append(entity)
 
             print(f"DEBUG: Found {len(matched_entities)} deployments matching cluster '{cluster_name}' and namespace '{namespace}'")
+
+            # If no matches, show what we found for the cluster
+            if len(matched_entities) == 0 and len(cluster_only_matches) > 0:
+                print(f"\nDEBUG: Found {len(cluster_only_matches)} entities matching cluster '{cluster_name}' but not namespace '{namespace}':")
+                print("DEBUG: Here are the namespace tags for these entities:")
+                for match in cluster_only_matches[:10]:  # Show first 10
+                    print(f"  - {match['name']}")
+                    print(f"    Cluster: {match['cluster_tag']}")
+                    print(f"    Namespace: {match['namespace_tag']}")
+                    print()
 
             if matched_entities:
                 # Print sample entity info for debugging
