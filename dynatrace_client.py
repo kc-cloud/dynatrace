@@ -223,7 +223,7 @@ class DynatraceClient:
         include_heap: bool = False
     ) -> Tuple[Dict[str, float], Dict[str, float], Optional[Dict[str, float]], int]:
         """
-        Get CPU and Memory metrics for a deployment
+        Get CPU and Memory metrics for a deployment by aggregating pod metrics
 
         Args:
             deployment_entity_id: Dynatrace entity ID for the deployment
@@ -243,21 +243,66 @@ class DynatraceClient:
         if not time_to:
             time_to = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
 
-        # Fetch CPU metrics
-        cpu_metrics = self._get_metric_stats(
-            metric_key='builtin:cloud.kubernetes.workload.cpu.usage',
-            entity_selector=f'entityId("{deployment_entity_id}")',
-            time_from=time_from,
-            time_to=time_to
-        )
+        print(f"DEBUG: Getting metrics for deployment {deployment_entity_id}")
 
-        # Fetch Memory metrics
-        memory_metrics = self._get_metric_stats(
-            metric_key='builtin:cloud.kubernetes.workload.memory.usage',
-            entity_selector=f'entityId("{deployment_entity_id}")',
-            time_from=time_from,
-            time_to=time_to
-        )
+        # First, get all pods for this deployment
+        pods = self._get_pods_for_deployment(deployment_entity_id)
+        pod_count = len(pods)
+
+        print(f"DEBUG: Found {pod_count} pods for deployment")
+
+        if pod_count == 0:
+            print("WARNING: No pods found for deployment")
+            return {'min': 0.0, 'max': 0.0}, {'min': 0.0, 'max': 0.0}, None, 0
+
+        # Aggregate metrics from all pods
+        all_cpu_values = []
+        all_memory_values = []
+
+        for pod in pods:
+            pod_id = pod.get('entityId', '')
+            pod_name = pod.get('displayName', 'Unknown')
+
+            print(f"DEBUG: Fetching metrics for pod: {pod_name} ({pod_id})")
+
+            # Fetch CPU metrics for this pod
+            cpu_metrics = self._get_metric_stats(
+                metric_key='builtin:cloud.kubernetes.workload.cpu.usage',
+                entity_selector=f'entityId("{pod_id}")',
+                time_from=time_from,
+                time_to=time_to
+            )
+
+            # Fetch Memory metrics for this pod
+            memory_metrics = self._get_metric_stats(
+                metric_key='builtin:cloud.kubernetes.workload.memory.usage',
+                entity_selector=f'entityId("{pod_id}")',
+                time_from=time_from,
+                time_to=time_to
+            )
+
+            if cpu_metrics['min'] > 0 or cpu_metrics['max'] > 0:
+                all_cpu_values.append(cpu_metrics)
+
+            if memory_metrics['min'] > 0 or memory_metrics['max'] > 0:
+                all_memory_values.append(memory_metrics)
+
+        # Aggregate the metrics
+        if all_cpu_values:
+            aggregated_cpu = {
+                'min': min(m['min'] for m in all_cpu_values if m['min'] > 0),
+                'max': sum(m['max'] for m in all_cpu_values)  # Sum of max across all pods
+            }
+        else:
+            aggregated_cpu = {'min': 0.0, 'max': 0.0}
+
+        if all_memory_values:
+            aggregated_memory = {
+                'min': min(m['min'] for m in all_memory_values if m['min'] > 0),
+                'max': sum(m['max'] for m in all_memory_values)  # Sum of max across all pods
+            }
+        else:
+            aggregated_memory = {'min': 0.0, 'max': 0.0}
 
         # Fetch JVM heap metrics if requested
         heap_metrics = None
@@ -268,10 +313,10 @@ class DynatraceClient:
                 time_to=time_to
             )
 
-        # Get pod count
-        pod_count = self._get_pod_count(deployment_entity_id)
+        print(f"DEBUG: Aggregated CPU: {aggregated_cpu}")
+        print(f"DEBUG: Aggregated Memory: {aggregated_memory}")
 
-        return cpu_metrics, memory_metrics, heap_metrics, pod_count
+        return aggregated_cpu, aggregated_memory, heap_metrics, pod_count
 
     def _get_metric_stats(
         self,
@@ -301,28 +346,73 @@ class DynatraceClient:
         }
 
         try:
+            print(f"DEBUG: Fetching metric {metric_key}")
             response = self._make_request('/api/v2/metrics/query', params=params)
 
             min_val = 0.0
             max_val = 0.0
 
+            print(f"DEBUG: Metric response: {response}")
+
             if 'result' in response and len(response['result']) > 0:
+                print(f"DEBUG: Found {len(response['result'])} result items")
                 for result_item in response['result']:
                     metric_id = result_item.get('metricId', '')
                     data = result_item.get('data', [])
 
+                    print(f"DEBUG: Metric ID: {metric_id}, Data entries: {len(data)}")
+
                     if data and len(data) > 0:
                         values = data[0].get('values', [])
+                        print(f"DEBUG: Values count: {len(values)}, Sample: {values[:3] if len(values) > 0 else 'empty'}")
                         if values:
                             if ':min' in metric_id:
                                 min_val = min([v for v in values if v is not None], default=0.0)
                             elif ':max' in metric_id:
                                 max_val = max([v for v in values if v is not None], default=0.0)
+            else:
+                print(f"WARNING: No results returned for metric {metric_key}")
+                if 'result' in response:
+                    print(f"DEBUG: Empty result array")
+                else:
+                    print(f"DEBUG: No 'result' key in response")
 
+            print(f"DEBUG: Final values for {metric_key} - min: {min_val}, max: {max_val}")
             return {'min': min_val, 'max': max_val}
         except Exception as e:
-            print(f"Error fetching metric {metric_key}: {e}")
+            print(f"ERROR: Error fetching metric {metric_key}: {e}")
+            import traceback
+            traceback.print_exc()
             return {'min': 0.0, 'max': 0.0}
+
+    def _get_pods_for_deployment(self, deployment_entity_id: str) -> List[Dict]:
+        """
+        Get all pods (CLOUD_APPLICATION_INSTANCE) for a deployment
+
+        Args:
+            deployment_entity_id: Deployment entity ID
+
+        Returns:
+            List of pod entities
+        """
+        # Query for pods belonging to this deployment
+        entity_selector = f'type("CLOUD_APPLICATION_INSTANCE"),fromRelationships.isInstanceOf(entityId("{deployment_entity_id}"))'
+
+        params = {
+            'entitySelector': entity_selector,
+            'pageSize': 500,
+            'fields': '+properties,+tags'
+        }
+
+        try:
+            print(f"DEBUG: Fetching pods for deployment {deployment_entity_id}")
+            response = self._make_request('/api/v2/entities', params=params)
+            pods = response.get('entities', [])
+            print(f"DEBUG: Found {len(pods)} pods")
+            return pods
+        except Exception as e:
+            print(f"ERROR: Error fetching pods: {e}")
+            return []
 
     def _get_pod_count(self, deployment_entity_id: str) -> int:
         """
@@ -334,20 +424,8 @@ class DynatraceClient:
         Returns:
             Number of pods
         """
-        # Query for pods belonging to this deployment
-        entity_selector = f'type("CLOUD_APPLICATION_INSTANCE"),fromRelationships.isInstanceOf(entityId("{deployment_entity_id}"))'
-
-        params = {
-            'entitySelector': entity_selector,
-            'pageSize': 500
-        }
-
-        try:
-            response = self._make_request('/api/v2/entities', params=params)
-            return response.get('totalCount', 0)
-        except Exception as e:
-            print(f"Error fetching pod count: {e}")
-            return 0
+        pods = self._get_pods_for_deployment(deployment_entity_id)
+        return len(pods)
 
     def _get_jvm_heap_metrics(
         self,
