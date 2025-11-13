@@ -46,13 +46,18 @@ class DynatraceClient:
         url = f"{self.base_url}{endpoint}"
 
         try:
+            print(f"DEBUG: Making request to: {url}")
+            if params:
+                print(f"DEBUG: Parameters: {params}")
             response = requests.get(url, headers=self.headers, params=params, timeout=30)
+            print(f"DEBUG: Response status code: {response.status_code}")
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
             print(f"Error making request to {url}: {e}")
             if hasattr(e, 'response') and e.response is not None:
-                print(f"Response: {e.response.text}")
+                print(f"Response status code: {e.response.status_code}")
+                print(f"Response body: {e.response.text}")
             raise
 
     def _make_post_request(self, endpoint: str, data: Dict) -> Dict:
@@ -89,22 +94,127 @@ class DynatraceClient:
         Returns:
             List of deployment entities
         """
-        # Query for workload entities (deployments)
-        entity_selector = (
-            f'type("CLOUD_APPLICATION"),'
-            f'tag("[Kubernetes]cluster:{cluster_name}"),'
-            f'tag("[Kubernetes]namespace:{namespace}")'
-        )
+        # Try multiple entity types and tag formats as different Dynatrace versions use different conventions
+        search_strategies = [
+            # Strategy 1: CLOUD_APPLICATION with standard Kubernetes tags
+            {
+                'entity_type': 'CLOUD_APPLICATION',
+                'tag_format': 'standard',
+                'description': 'CLOUD_APPLICATION with [Kubernetes]cluster and [Kubernetes]namespace tags'
+            },
+            # Strategy 2: CLOUD_APPLICATION with alternative tag format (no brackets)
+            {
+                'entity_type': 'CLOUD_APPLICATION',
+                'tag_format': 'no_brackets',
+                'description': 'CLOUD_APPLICATION with Kubernetes:cluster and Kubernetes:namespace tags'
+            },
+            # Strategy 3: CLOUD_APPLICATION without namespace filter (then filter manually)
+            {
+                'entity_type': 'CLOUD_APPLICATION',
+                'tag_format': 'cluster_only',
+                'description': 'CLOUD_APPLICATION with cluster tag only'
+            },
+            # Strategy 4: Try without any filters to see all CLOUD_APPLICATION entities
+            {
+                'entity_type': 'CLOUD_APPLICATION',
+                'tag_format': 'none',
+                'description': 'CLOUD_APPLICATION without filters'
+            }
+        ]
 
-        params = {
-            'entitySelector': entity_selector,
-            'fields': '+properties,+tags'
-        }
+        for strategy in search_strategies:
+            try:
+                entity_type = strategy['entity_type']
+                tag_format = strategy['tag_format']
+                print(f"DEBUG: Trying strategy: {strategy['description']}")
 
-        response = self._make_request('/api/v2/entities', params=params)
-        deployments = response.get('entities', [])
+                # Build entity selector based on tag format
+                if tag_format == 'standard':
+                    entity_selector = (
+                        f'type("{entity_type}"),'
+                        f'tag("[Kubernetes]cluster:{cluster_name}"),'
+                        f'tag("[Kubernetes]namespace:{namespace}")'
+                    )
+                elif tag_format == 'no_brackets':
+                    entity_selector = (
+                        f'type("{entity_type}"),'
+                        f'tag("Kubernetes:cluster:{cluster_name}"),'
+                        f'tag("Kubernetes:namespace:{namespace}")'
+                    )
+                elif tag_format == 'cluster_only':
+                    entity_selector = (
+                        f'type("{entity_type}"),'
+                        f'tag("[Kubernetes]cluster:{cluster_name}")'
+                    )
+                else:  # none
+                    entity_selector = f'type("{entity_type}")'
 
-        return deployments
+                params = {
+                    'entitySelector': entity_selector,
+                    'fields': '+properties,+tags',
+                    'pageSize': 500
+                }
+
+                response = self._make_request('/api/v2/entities', params=params)
+                entities = response.get('entities', [])
+
+                print(f"DEBUG: Retrieved {len(entities)} entities")
+
+                # If we used cluster_only or none, filter by namespace manually
+                if tag_format in ['cluster_only', 'none'] and entities:
+                    print(f"DEBUG: Filtering entities by namespace '{namespace}'")
+                    filtered_entities = []
+                    for entity in entities:
+                        tags = entity.get('tags', [])
+                        # Check if entity has the namespace tag
+                        for tag in tags:
+                            tag_key = tag.get('key', '')
+                            tag_value = tag.get('value', tag.get('stringRepresentation', ''))
+
+                            # Check various namespace tag formats
+                            if (('[Kubernetes]namespace' in tag_key and namespace in str(tag_value)) or
+                                ('Kubernetes:namespace' in tag_key and namespace in str(tag_value)) or
+                                (tag_key == 'namespace' and namespace in str(tag_value))):
+                                filtered_entities.append(entity)
+                                break
+
+                    entities = filtered_entities
+                    print(f"DEBUG: After filtering: {len(entities)} entities match namespace '{namespace}'")
+
+                if entities:
+                    print(f"DEBUG: Successfully found {len(entities)} deployments using: {strategy['description']}")
+
+                    # Print sample entity info for debugging
+                    if entities:
+                        sample = entities[0]
+                        print(f"DEBUG: Sample entity - Name: {sample.get('displayName', 'N/A')}, ID: {sample.get('entityId', 'N/A')}")
+                        print(f"DEBUG: Sample entity tags: {[tag.get('key', '') for tag in sample.get('tags', [])[:5]]}")
+
+                    return entities
+
+            except requests.exceptions.HTTPError as e:
+                if hasattr(e, 'response'):
+                    status_code = e.response.status_code
+                    if status_code == 400:
+                        print(f"DEBUG: Bad request (400) for strategy: {strategy['description']}")
+                        continue
+                    elif status_code == 404:
+                        print(f"DEBUG: Not found (404) for strategy: {strategy['description']}")
+                        continue
+                    else:
+                        print(f"DEBUG: HTTP error {status_code} for strategy: {strategy['description']}")
+                        # For other HTTP errors, continue trying
+                        continue
+                else:
+                    raise
+            except Exception as e:
+                print(f"DEBUG: Exception for strategy {strategy['description']}: {e}")
+                continue
+
+        # If we get here, none of the strategies worked
+        print(f"WARNING: Could not find deployments for cluster '{cluster_name}' namespace '{namespace}' using any strategy")
+        print(f"SUGGESTION: Run debug_entities.py to see available entity types and tags in your environment")
+        return []
 
     def get_workload_metrics(
         self,
