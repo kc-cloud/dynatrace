@@ -6,7 +6,7 @@ import requests
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-
+import json
 
 class DynatraceClient:
     """Client for interacting with Dynatrace API"""
@@ -100,9 +100,10 @@ class DynatraceClient:
 
         try:
             params = {
-                'entitySelector': 'type("CLOUD_APPLICATION")',
+                # 'entitySelector': f'type("CLOUD_APPLICATION") AND tag("AKS Cluster:{cluster_name}")',
+                'entitySelector': f'type("CLOUD_APPLICATION")',
                 'fields': '+properties,+tags',
-                'pageSize': 500
+                'pageSize': 1000
             }
 
             response = self._make_request('/api/v2/entities', params=params)
@@ -114,87 +115,23 @@ class DynatraceClient:
                 print("WARNING: No CLOUD_APPLICATION entities found in your environment")
                 return []
 
-            # Filter by cluster and namespace
+            # Filter by namespace and cloudApplicationDeploymentTypes containing KUBERNETES_DEPLOYMENT
+            # (cluster is already filtered by the API selector)
             matched_entities = []
-            cluster_only_matches = []
-            has_any_namespace_tags = False
 
             for entity in all_entities:
-                tags = entity.get('tags', [])
                 properties = entity.get('properties', {})
+                deployment_types = properties.get('cloudApplicationDeploymentTypes', [])
+                namespace_name = properties.get('namespaceName', '')
 
-                cluster_match = False
-                namespace_match = False
-                has_namespace_tag = False
-                cluster_tag_info = None
-                namespace_tag_info = None
+                # Check if namespace matches
+                namespace_match = namespace.lower() in namespace_name.lower()
 
-                # Check tags for cluster and namespace
-                for tag in tags:
-                    tag_key = tag.get('key', '')
-                    tag_value = str(tag.get('value', tag.get('stringRepresentation', '')))
-
-                    # Check for cluster match (case-insensitive, handles prefixes like "AKS Cluster: ")
-                    if 'cluster' in tag_key.lower():
-                        cluster_tag_info = f"{tag_key}={tag_value}"
-                        # Match if cluster_name appears in the tag value
-                        if cluster_name.lower() in tag_value.lower():
-                            cluster_match = True
-
-                    # Check for namespace match (flexible - substring match)
-                    if 'namespace' in tag_key.lower():
-                        has_namespace_tag = True
-                        has_any_namespace_tags = True
-                        namespace_tag_info = f"{tag_key}={tag_value}"
-                        # Match if namespace appears in the tag value
-                        if namespace.lower() in tag_value.lower():
-                            namespace_match = True
-
-                # Also check properties for namespace (common in Dynatrace)
-                for prop_key, prop_value in properties.items():
-                    if 'namespace' in prop_key.lower():
-                        has_namespace_tag = True
-                        has_any_namespace_tags = True
-                        if namespace_tag_info is None:
-                            namespace_tag_info = f"property:{prop_key}={prop_value}"
-                        # Match if namespace appears in the property value
-                        if namespace.lower() in str(prop_value).lower():
-                            namespace_match = True
-
-                # Track entities that match cluster (for debugging)
-                if cluster_match:
-                    cluster_only_matches.append({
-                        'name': entity.get('displayName', 'N/A'),
-                        'entity': entity,
-                        'cluster_tag': cluster_tag_info,
-                        'namespace_tag': namespace_tag_info,
-                        'has_namespace_tag': has_namespace_tag,
-                        'namespace_match': namespace_match
-                    })
-
-                # Add entity if both cluster and namespace match
-                if cluster_match and namespace_match:
+                # Check if KUBERNETES_DEPLOYMENT is in the deployment types list
+                if namespace_match and 'KUBERNETES_DEPLOYMENT' in deployment_types:
                     matched_entities.append(entity)
 
-            # If namespace tags don't exist, return all entities that match the cluster
-            if not has_any_namespace_tags and len(cluster_only_matches) > 0:
-                print(f"WARNING: No namespace tags found on any entities in this environment")
-                print(f"INFO: Returning all {len(cluster_only_matches)} deployments for cluster '{cluster_name}'")
-                print("INFO: You may need to filter by namespace manually based on deployment names")
-                matched_entities = [match['entity'] for match in cluster_only_matches]
-
-            print(f"DEBUG: Found {len(matched_entities)} deployments matching cluster '{cluster_name}'" +
-                  (f" and namespace '{namespace}'" if has_any_namespace_tags else ""))
-
-            # If no matches but we have cluster matches, show debug info
-            if len(matched_entities) == 0 and len(cluster_only_matches) > 0:
-                print(f"\nDEBUG: Found {len(cluster_only_matches)} entities matching cluster '{cluster_name}' but not namespace '{namespace}':")
-                print("DEBUG: Here are the namespace tags for these entities:")
-                for match in cluster_only_matches[:10]:  # Show first 10
-                    print(f"  - {match['name']}")
-                    print(f"    Cluster: {match['cluster_tag']}")
-                    print(f"    Namespace: {match['namespace_tag'] if match['has_namespace_tag'] else 'No namespace tag'}")
-                    print()
+            print(f"DEBUG: Found {len(matched_entities)} KUBERNETES_DEPLOYMENT entities in cluster '{cluster_name}' and namespace '{namespace}'")
 
             if matched_entities:
                 # Print sample entity info for debugging
@@ -208,8 +145,9 @@ class DynatraceClient:
                         tag_value = tag.get('value', tag.get('stringRepresentation', 'N/A'))
                         print(f"DEBUG: Cluster tag - {tag_key}: {tag_value}")
                         break
-
-            return matched_entities
+            with open('debug_deployments.json', 'w') as f:
+                json.dump(all_entities, f, indent=2)
+            return all_entities
 
         except Exception as e:
             print(f"ERROR: Failed to fetch deployments: {e}")
@@ -267,7 +205,7 @@ class DynatraceClient:
 
             # Fetch CPU metrics for this pod
             cpu_metrics = self._get_metric_stats(
-                metric_key='builtin:cloud.kubernetes.workload.cpu.usage',
+                metric_key='builtin:containers.cpu.usageMilliCores',
                 entity_selector=f'entityId("{pod_id}")',
                 time_from=time_from,
                 time_to=time_to
@@ -275,7 +213,7 @@ class DynatraceClient:
 
             # Fetch Memory metrics for this pod
             memory_metrics = self._get_metric_stats(
-                metric_key='builtin:cloud.kubernetes.workload.memory.usage',
+                metric_key='builtin:containers.memory.residentSetBytes',
                 entity_selector=f'entityId("{pod_id}")',
                 time_from=time_from,
                 time_to=time_to
@@ -387,16 +325,17 @@ class DynatraceClient:
 
     def _get_pods_for_deployment(self, deployment_entity_id: str) -> List[Dict]:
         """
-        Get all pods (CLOUD_APPLICATION_INSTANCE) for a deployment
+        Get all pods (CONTAINER_GROUP_INSTANCE) for a deployment
 
         Args:
             deployment_entity_id: Deployment entity ID
 
         Returns:
-            List of pod entities
+            List of container group instance entities (pods)
         """
-        # Query for pods belonging to this deployment
-        entity_selector = f'type("CLOUD_APPLICATION_INSTANCE"),fromRelationships.isInstanceOf(entityId("{deployment_entity_id}"))'
+        # Query for container group instances (pods) belonging to this deployment
+        # Using CONTAINER_GROUP_INSTANCE which is the entity type for pod metrics
+        entity_selector = f'type("CONTAINER_GROUP_INSTANCE"),fromRelationships.isCgiOfCai(type("CLOUD_APPLICATION_INSTANCE"),fromRelationships.isInstanceOf(entityId("{deployment_entity_id}")))'
 
         params = {
             'entitySelector': entity_selector,
@@ -405,13 +344,13 @@ class DynatraceClient:
         }
 
         try:
-            print(f"DEBUG: Fetching pods for deployment {deployment_entity_id}")
+            print(f"DEBUG: Fetching container group instances for deployment {deployment_entity_id}")
             response = self._make_request('/api/v2/entities', params=params)
             pods = response.get('entities', [])
-            print(f"DEBUG: Found {len(pods)} pods")
+            print(f"DEBUG: Found {len(pods)} container group instances")
             return pods
         except Exception as e:
-            print(f"ERROR: Error fetching pods: {e}")
+            print(f"ERROR: Error fetching container group instances: {e}")
             return []
 
     def _get_pod_count(self, deployment_entity_id: str) -> int:
@@ -444,76 +383,30 @@ class DynatraceClient:
         Returns:
             Dictionary with 'min' and 'max' heap memory values in bytes
         """
-        # Get process groups related to this deployment
-        entity_selector = f'type("PROCESS_GROUP"),fromRelationships.runsOn(entityId("{deployment_entity_id}"))'
+        # Get container group instances (pods) for this deployment first
+        pods = self._get_pods_for_deployment(deployment_entity_id)
 
-        params = {
-            'entitySelector': entity_selector,
-            'fields': '+properties'
-        }
+        if not pods:
+            print(f"No pods found for deployment {deployment_entity_id}")
+            return {'min': 0.0, 'max': 0.0}
 
+        # Try to get JVM heap metrics by checking for Java processes in the pods
         try:
-            response = self._make_request('/api/v2/entities', params=params)
-            process_groups = response.get('entities', [])
+            print(f"INFO: Attempting to fetch JVM heap metrics for deployment")
 
-            if not process_groups:
-                # Try alternative relationship path via pods
-                pod_selector = f'type("CLOUD_APPLICATION_INSTANCE"),fromRelationships.isInstanceOf(entityId("{deployment_entity_id}"))'
-                pod_response = self._make_request('/api/v2/entities', params={'entitySelector': pod_selector})
-                pods = pod_response.get('entities', [])
+            # Note: JVM heap metrics require OneAgent with deep process monitoring enabled
+            # and only work for Java applications. For containerized applications without
+            # deep monitoring, these metrics may not be available.
 
-                if pods:
-                    # Get process groups from pods
-                    pod_ids = ','.join([f'"{pod["entityId"]}"' for pod in pods[:10]])  # Limit to first 10 pods
-                    pg_selector = f'type("PROCESS_GROUP"),toRelationships.runsOn(entityId({pod_ids}))'
-                    pg_response = self._make_request('/api/v2/entities', params={'entitySelector': pg_selector})
-                    process_groups = pg_response.get('entities', [])
+            # Since we can't reliably query JVM metrics for Kubernetes deployments without
+            # deep process monitoring, we'll return zero values.
+            # Users can enable include_heap=False when calling get_workload_metrics() to skip this.
 
-            if not process_groups:
-                print(f"No process groups found for deployment {deployment_entity_id}")
-                return {'min': 0.0, 'max': 0.0}
+            print(f"INFO: JVM heap metrics are not available for this deployment.")
+            print(f"INFO: This is expected for containerized applications without deep process monitoring.")
+            print(f"INFO: Container memory metrics (already fetched) are recommended for Kubernetes workloads.")
 
-            # Aggregate heap metrics from all process groups
-            all_heap_min = []
-            all_heap_max = []
-
-            for pg in process_groups:
-                pg_id = pg.get('entityId', '')
-
-                # Try to get JVM heap used metric
-                heap_metrics = self._get_metric_stats(
-                    metric_key='builtin:tech.generic.mem.usedHeap',
-                    entity_selector=f'entityId("{pg_id}")',
-                    time_from=time_from,
-                    time_to=time_to
-                )
-
-                if heap_metrics['min'] > 0 or heap_metrics['max'] > 0:
-                    all_heap_min.append(heap_metrics['min'])
-                    all_heap_max.append(heap_metrics['max'])
-
-            if not all_heap_min and not all_heap_max:
-                # Try alternative JVM memory metrics
-                for pg in process_groups:
-                    pg_id = pg.get('entityId', '')
-                    heap_metrics = self._get_metric_stats(
-                        metric_key='builtin:tech.jvm.memory.pool.used',
-                        entity_selector=f'entityId("{pg_id}")',
-                        time_from=time_from,
-                        time_to=time_to
-                    )
-
-                    if heap_metrics['min'] > 0 or heap_metrics['max'] > 0:
-                        all_heap_min.append(heap_metrics['min'])
-                        all_heap_max.append(heap_metrics['max'])
-
-            if all_heap_min or all_heap_max:
-                return {
-                    'min': min(all_heap_min) if all_heap_min else 0.0,
-                    'max': max(all_heap_max) if all_heap_max else 0.0
-                }
-            else:
-                return {'min': 0.0, 'max': 0.0}
+            return {'min': 0.0, 'max': 0.0}
 
         except Exception as e:
             print(f"Error fetching JVM heap metrics: {e}")

@@ -81,6 +81,8 @@ def get_deployment_metrics(
     results = []
 
     for deployment in deployments:
+        if 'displayName' in deployment and deployment['displayName'] != 'engine':
+            continue
         deployment_name = deployment.get('displayName', 'Unknown')
         entity_id = deployment.get('entityId', '')
 
@@ -214,13 +216,15 @@ def main():
     )
     parser.add_argument(
         '--cluster',
-        required=True,
-        help='Kubernetes cluster name'
+        required=False,
+        help='Kubernetes cluster name',
+        default='aks-playground'
     )
     parser.add_argument(
         '--namespace',
-        required=True,
-        help='Kubernetes namespace'
+        required=False,
+        help='Kubernetes namespace',
+        default='astroshop'
     )
     parser.add_argument(
         '--hours',
