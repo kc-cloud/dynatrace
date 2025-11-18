@@ -373,7 +373,9 @@ class DynatraceClient:
         time_to: str
     ) -> Dict[str, float]:
         """
-        Get JVM heap memory metrics for a deployment
+        Get container memory metrics for a deployment.
+        Since JVM heap metrics are unavailable in typical containerized workloads,
+        this uses resident set bytes from CONTAINER_GROUP_INSTANCE as a substitute.
 
         Args:
             deployment_entity_id: Deployment entity ID
@@ -381,36 +383,59 @@ class DynatraceClient:
             time_to: End time
 
         Returns:
-            Dictionary with 'min' and 'max' heap memory values in bytes
+            Dictionary with 'min' and 'max' memory values in bytes
         """
-        # Get container group instances (pods) for this deployment first
+        # Get container group instances (pods) for this deployment
         pods = self._get_pods_for_deployment(deployment_entity_id)
 
         if not pods:
             print(f"No pods found for deployment {deployment_entity_id}")
             return {'min': 0.0, 'max': 0.0}
 
-        # Try to get JVM heap metrics by checking for Java processes in the pods
-        try:
-            print(f"INFO: Attempting to fetch JVM heap metrics for deployment")
+        min_mem = float('inf')
+        max_mem = float('-inf')
 
-            # Note: JVM heap metrics require OneAgent with deep process monitoring enabled
-            # and only work for Java applications. For containerized applications without
-            # deep monitoring, these metrics may not be available.
+        for pod in pods:
+            container_id = pod['entityId']
+            try:
+                # Query container memory metrics
+                metric_selector = (
+                    f"builtin:containers.memory.residentSetBytes:min,"
+                    f"builtin:containers.memory.residentSetBytes:max"
+                )
+                entity_selector = f'type("CONTAINER_GROUP_INSTANCE"),entityId("{container_id}")'
 
-            # Since we can't reliably query JVM metrics for Kubernetes deployments without
-            # deep process monitoring, we'll return zero values.
-            # Users can enable include_heap=False when calling get_workload_metrics() to skip this.
+                response = self._query_metrics(
+                    metric_selector=metric_selector,
+                    entity_selector=entity_selector,
+                    time_from=time_from,
+                    time_to=time_to,
+                    resolution='1h'
+                )
 
-            print(f"INFO: JVM heap metrics are not available for this deployment.")
-            print(f"INFO: This is expected for containerized applications without deep process monitoring.")
-            print(f"INFO: Container memory metrics (already fetched) are recommended for Kubernetes workloads.")
+                # Extract min/max from response
+                for metric in response.get('result', []):
+                    values = metric.get('data', [])[0].get('values', [])
+                    values_filtered = [v for v in values if v is not None]
+                    if not values_filtered:
+                        continue
 
-            return {'min': 0.0, 'max': 0.0}
+                    if metric['metricId'].endswith(':min'):
+                        min_mem = min(min_mem, min(values_filtered))
+                    elif metric['metricId'].endswith(':max'):
+                        max_mem = max(max_mem, max(values_filtered))
 
-        except Exception as e:
-            print(f"Error fetching JVM heap metrics: {e}")
-            return {'min': 0.0, 'max': 0.0}
+            except Exception as e:
+                print(f"Error fetching memory for container {container_id}: {e}")
+                continue
+
+        if min_mem == float('inf'):
+            min_mem = 0.0
+        if max_mem == float('-inf'):
+            max_mem = 0.0
+
+        return {'min': min_mem, 'max': max_mem}
+
 
     def create_dashboard(self, dashboard_config: Dict) -> Optional[str]:
         """
@@ -429,3 +454,33 @@ class DynatraceClient:
         except Exception as e:
             print(f"Error creating dashboard: {e}")
             return None
+
+    def _query_metrics(
+        self,
+        metric_selector: str,
+        entity_selector: str = None,
+        time_from: str = None,
+        time_to: str = None,
+        resolution: str = None
+    ):
+        """
+        Generic helper to call /api/v2/metrics/query.
+        Works with _make_request() which already returns parsed JSON.
+        """
+
+        params = {"metricSelector": metric_selector}
+
+        if entity_selector:
+            params["entitySelector"] = entity_selector
+        if time_from:
+            params["from"] = time_from
+        if time_to:
+            params["to"] = time_to
+        if resolution:
+            params["resolution"] = resolution
+
+        # _make_request already:
+        # - performs the HTTP call
+        # - calls raise_for_status()
+        # - returns response.json()
+        return self._make_request("/api/v2/metrics/query", params=params)
