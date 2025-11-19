@@ -227,16 +227,18 @@ class DynatraceClient:
 
         # Aggregate the metrics
         if all_cpu_values:
+            cpu_mins = [m['min'] for m in all_cpu_values if m['min'] > 0]
             aggregated_cpu = {
-                'min': min(m['min'] for m in all_cpu_values if m['min'] > 0),
+                'min': min(cpu_mins) if cpu_mins else 0.0,
                 'max': sum(m['max'] for m in all_cpu_values)  # Sum of max across all pods
             }
         else:
             aggregated_cpu = {'min': 0.0, 'max': 0.0}
 
         if all_memory_values:
+            memory_mins = [m['min'] for m in all_memory_values if m['min'] > 0]
             aggregated_memory = {
-                'min': min(m['min'] for m in all_memory_values if m['min'] > 0),
+                'min': min(memory_mins) if memory_mins else 0.0,
                 'max': sum(m['max'] for m in all_memory_values)  # Sum of max across all pods
             }
         else:
