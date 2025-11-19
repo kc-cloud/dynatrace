@@ -6,11 +6,11 @@
     "properties": {
       "detectedName": "accounting",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -59,10 +59,10 @@
     "properties": {
       "detectedName": "eks-3-playground-external-secrets",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "external-secrets-0.15.0",
@@ -107,10 +107,10 @@
     "properties": {
       "detectedName": "my-otel-demo-shippingservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -144,7 +144,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -159,10 +159,10 @@
     "properties": {
       "detectedName": "flagd",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_METRICS"
+        "API_MONITORING",
+        "CUSTOM_METRICS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -211,10 +211,10 @@
     "properties": {
       "detectedName": "run-k6",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "argocd.argoproj.io/instance": "eks-playground-travel-advisor-demo"
@@ -237,8 +237,8 @@
     "properties": {
       "detectedName": "kube-apiserver-ip-10-45-243-61",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "tier": "control-plane",
@@ -267,9 +267,8 @@
     "properties": {
       "detectedName": "metrics-server",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "kubernetes.io/cluster-service": "true",
@@ -312,11 +311,11 @@
     "properties": {
       "detectedName": "my-otel-demo-cartservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -334,23 +333,23 @@
       ],
       "kubernetesConditions": [
         {
+          "type": "Progressing",
+          "status": "True",
+          "reason": "NewReplicaSetAvailable",
+          "message": "ReplicaSet \"my-otel-demo-cartservice-57d64cc5b4\" has successfully progressed.",
+          "lastTransitionTimestamp": 1737457133000
+        },
+        {
           "type": "Available",
           "status": "True",
           "reason": "MinimumReplicasAvailable",
           "message": "Deployment has minimum availability.",
-          "lastTransitionTimestamp": 1762972086000
-        },
-        {
-          "type": "Progressing",
-          "status": "True",
-          "reason": "NewReplicaSetAvailable",
-          "message": "ReplicaSet \"my-otel-demo-cartservice-6f754984bd\" has successfully progressed.",
-          "lastTransitionTimestamp": 1737457133000
+          "lastTransitionTimestamp": 1763540739000
         }
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -396,10 +395,9 @@
       "detectedName": "dapr-operator",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "dapr-operator",
@@ -445,10 +443,10 @@
     "properties": {
       "detectedName": "unguard-redis",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -492,10 +490,10 @@
     "properties": {
       "detectedName": "productcatalogservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -535,8 +533,8 @@
     "properties": {
       "detectedName": "coredns",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "k8s-app": "kube-dns"
@@ -576,10 +574,10 @@
     "properties": {
       "detectedName": "external-dns",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/name": "external-dns"
@@ -619,10 +617,10 @@
     "properties": {
       "detectedName": "paymentservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -670,9 +668,8 @@
     "properties": {
       "detectedName": "coredns-autoscaler",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "kubernetes.io/cluster-service": "true",
@@ -715,9 +712,9 @@
     "properties": {
       "detectedName": "coredns",
       "observedBy": [
-        "BUILTIN_METRICS",
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "eks.amazonaws.com/component": "coredns",
@@ -759,10 +756,10 @@
     "properties": {
       "detectedName": "my-otel-demo-recommendationservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -811,9 +808,9 @@
     "properties": {
       "detectedName": "otel-collector",
       "observedBy": [
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-collector-0.117.1",
@@ -859,10 +856,10 @@
     "properties": {
       "detectedName": "my-otel-demo-productcatalogservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -911,9 +908,8 @@
     "properties": {
       "detectedName": "dynatrace-oneagent-csi-driver",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "dynatrace-operator-1.7.0",
@@ -944,10 +940,9 @@
       "detectedName": "dapr-placement-server",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "dapr-placement-server",
@@ -976,9 +971,8 @@
     "properties": {
       "detectedName": "konnectivity-agent-autoscaler",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "konnectivity-agent-autoscaler",
@@ -1022,9 +1016,8 @@
       "detectedName": "my-otel-demo-currencyservice",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -1073,11 +1066,11 @@
     "properties": {
       "detectedName": "product-db",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "argocd.argoproj.io/instance": "aks-playground-astroshop"
@@ -1117,10 +1110,10 @@
     "properties": {
       "detectedName": "loadgen",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "loadgen",
@@ -1161,8 +1154,8 @@
     "properties": {
       "detectedName": "eks-playground-activegate",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/created-by": "eks-playground",
@@ -1191,10 +1184,10 @@
     "properties": {
       "detectedName": "unguard-malicious-load-generator",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/name": "malicious-load-generator",
@@ -1238,10 +1231,10 @@
     "properties": {
       "detectedName": "my-otel-demo-emailservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -1290,10 +1283,10 @@
     "properties": {
       "detectedName": "my-otel-demo-imageprovider",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -1314,7 +1307,7 @@
           "type": "Progressing",
           "status": "True",
           "reason": "NewReplicaSetAvailable",
-          "message": "ReplicaSet \"my-otel-demo-imageprovider-8659654666\" has successfully progressed.",
+          "message": "ReplicaSet \"my-otel-demo-imageprovider-67cf6fc458\" has successfully progressed.",
           "lastTransitionTimestamp": 1737457133000
         },
         {
@@ -1322,12 +1315,12 @@
           "status": "True",
           "reason": "MinimumReplicasAvailable",
           "message": "Deployment has minimum availability.",
-          "lastTransitionTimestamp": 1763479636000
+          "lastTransitionTimestamp": 1763539536000
         }
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -1342,8 +1335,8 @@
     "properties": {
       "detectedName": "ebs-csi-node-windows",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/managed-by": "EKS",
@@ -1371,10 +1364,10 @@
     "properties": {
       "detectedName": "checkoutservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -1414,10 +1407,10 @@
     "properties": {
       "detectedName": "unguard-user-auth-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -1461,8 +1454,8 @@
     "properties": {
       "detectedName": "dt-cloudbleed-kspm-lima-activegate",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/created-by": "dt-cloudbleed-kspm-lima",
@@ -1491,9 +1484,8 @@
     "properties": {
       "detectedName": "azure-ip-masq-agent",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "component": "azure-ip-masq-agent",
@@ -1521,10 +1513,10 @@
     "properties": {
       "detectedName": "aggregator-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -1564,9 +1556,9 @@
     "properties": {
       "detectedName": "aws-node",
       "observedBy": [
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "aws-vpc-cni-1.20.4",
@@ -1596,10 +1588,10 @@
     "properties": {
       "detectedName": "my-otel-demo-emailservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -1633,7 +1625,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -1648,10 +1640,10 @@
     "properties": {
       "detectedName": "redis-cart",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -1691,9 +1683,8 @@
     "properties": {
       "detectedName": "csi-blob-node",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "kubernetes.azure.com/managedby": "aks",
@@ -1719,9 +1710,9 @@
     "properties": {
       "detectedName": "ebs-csi-node",
       "observedBy": [
-        "BUILTIN_METRICS",
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/managed-by": "EKS",
@@ -1749,10 +1740,10 @@
     "properties": {
       "detectedName": "eks-3-playground-external-secrets-webhook",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "external-secrets-0.15.0",
@@ -1797,11 +1788,11 @@
     "properties": {
       "detectedName": "my-otel-demo-checkoutservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -1823,19 +1814,19 @@
           "status": "True",
           "reason": "MinimumReplicasAvailable",
           "message": "Deployment has minimum availability.",
-          "lastTransitionTimestamp": 1762972095000
+          "lastTransitionTimestamp": 1763541060000
         },
         {
           "type": "Progressing",
           "status": "True",
           "reason": "NewReplicaSetAvailable",
-          "message": "ReplicaSet \"my-otel-demo-checkoutservice-7b786595b8\" has successfully progressed.",
+          "message": "ReplicaSet \"my-otel-demo-checkoutservice-5b8679f65b\" has successfully progressed.",
           "lastTransitionTimestamp": 1737457134000
         }
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "9",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -1850,8 +1841,8 @@
     "properties": {
       "detectedName": "dynatrace-webhook",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "dynatrace-operator-1.7.0",
@@ -1897,11 +1888,11 @@
     "properties": {
       "detectedName": "my-otel-demo-kafka",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -1950,9 +1941,9 @@
     "properties": {
       "detectedName": "dynatrace-oneagent-csi-driver",
       "observedBy": [
-        "BUILTIN_METRICS",
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "dynatrace-operator-1.7.0",
@@ -1982,10 +1973,10 @@
     "properties": {
       "detectedName": "cartservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -2025,8 +2016,8 @@
     "properties": {
       "detectedName": "csi-azuredisk-node-win",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "kubernetes.azure.com/managedby": "aks",
@@ -2053,15 +2044,15 @@
     "properties": {
       "detectedName": "aks-playground-oneagent",
       "observedBy": [
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/created-by": "aks-playground",
         "app.kubernetes.io/managed-by": "dynatrace-operator",
         "app.kubernetes.io/name": "oneagent",
-        "app.kubernetes.io/version": "1.325.47.20251022-093211",
+        "app.kubernetes.io/version": "1.325.64.20251114-153027",
         "app.kubernetes.io/component": "cloudnativefullstack"
       },
       "resourceUid": "cb94888e-a927-451b-9a60-c2400a99eee1",
@@ -2070,8 +2061,8 @@
       ],
       "kubernetesConditions": [],
       "kubernetesAnnotations": {
-        "internal.operator.dynatrace.com/template-hash": "1250141569",
-        "deprecated.daemonset.template.generation": "8"
+        "internal.operator.dynatrace.com/template-hash": "3121828454",
+        "deprecated.daemonset.template.generation": "9"
       },
       "resourceCreationTimestamp": 1754395385000,
       "namespaceName": "dynatrace"
@@ -2085,10 +2076,10 @@
     "properties": {
       "detectedName": "my-otel-demo-valkey",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -2122,7 +2113,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -2137,10 +2128,10 @@
     "properties": {
       "detectedName": "loginservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -2180,10 +2171,10 @@
     "properties": {
       "detectedName": "my-otel-demo-paymentservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -2232,10 +2223,10 @@
     "properties": {
       "detectedName": "shippingholidaysservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -2275,9 +2266,9 @@
     "properties": {
       "detectedName": "credit-card-order-service",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -2325,10 +2316,10 @@
     "properties": {
       "detectedName": "pricing-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -2368,8 +2359,8 @@
     "properties": {
       "detectedName": "kube-flannel-ds",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "flannel",
@@ -2396,10 +2387,10 @@
     "properties": {
       "detectedName": "unguard-frontend",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -2443,10 +2434,10 @@
     "properties": {
       "detectedName": "image-provider",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_METRICS"
+        "API_MONITORING",
+        "CUSTOM_METRICS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -2496,10 +2487,9 @@
       "detectedName": "dapr-sidecar-injector",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "dapr-sidecar-injector",
@@ -2545,10 +2535,10 @@
     "properties": {
       "detectedName": "unguard-status-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -2620,10 +2610,10 @@
     "properties": {
       "detectedName": "my-otel-demo-imageprovider",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -2672,11 +2662,11 @@
     "properties": {
       "detectedName": "my-otel-demo-currencyservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -2710,7 +2700,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -2725,10 +2715,10 @@
     "properties": {
       "detectedName": "email",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_METRICS"
+        "API_MONITORING",
+        "CUSTOM_METRICS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -2777,9 +2767,8 @@
     "properties": {
       "detectedName": "csi-azuredisk-node",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "kubernetes.azure.com/managedby": "aks",
@@ -2806,11 +2795,11 @@
     "properties": {
       "detectedName": "load-generator",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -2859,10 +2848,10 @@
     "properties": {
       "detectedName": "my-otel-demo-frontendproxy",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -2911,10 +2900,10 @@
     "properties": {
       "detectedName": "travel-advisor-demo",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "argocd.argoproj.io/instance": "eks-playground-travel-advisor-demo"
@@ -2954,10 +2943,10 @@
     "properties": {
       "detectedName": "problem-operator",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -2998,10 +2987,9 @@
       "detectedName": "aks-playground-external-secrets",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "external-secrets-0.15.0",
@@ -3046,9 +3034,9 @@
     "properties": {
       "detectedName": "dynatrace-oneagent-csi-driver",
       "observedBy": [
-        "BUILTIN_METRICS",
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "dynatrace-operator-1.7.0",
@@ -3079,10 +3067,10 @@
     "properties": {
       "detectedName": "my-otel-demo-loadgenerator",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -3131,10 +3119,10 @@
     "properties": {
       "detectedName": "my-otel-demo-adservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -3163,7 +3151,7 @@
           "status": "True",
           "reason": "MinimumReplicasAvailable",
           "message": "Deployment has minimum availability.",
-          "lastTransitionTimestamp": 1763472387000
+          "lastTransitionTimestamp": 1763512760000
         }
       ],
       "kubernetesAnnotations": {
@@ -3183,10 +3171,10 @@
     "properties": {
       "detectedName": "translationservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -3226,10 +3214,10 @@
     "properties": {
       "detectedName": "unguard-profile-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -3273,10 +3261,10 @@
     "properties": {
       "detectedName": "frontend",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -3324,9 +3312,8 @@
     "properties": {
       "detectedName": "coredns",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "kubernetes.io/cluster-service": "true",
@@ -3371,10 +3358,10 @@
     "properties": {
       "detectedName": "my-otel-demo-otelcol",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-collector-0.109.0",
@@ -3420,11 +3407,11 @@
     "properties": {
       "detectedName": "load-generator",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "load-generator",
@@ -3444,10 +3431,10 @@
         },
         {
           "type": "Available",
-          "status": "False",
-          "reason": "MinimumReplicasUnavailable",
-          "message": "Deployment does not have minimum availability.",
-          "lastTransitionTimestamp": 1763479702000
+          "status": "True",
+          "reason": "MinimumReplicasAvailable",
+          "message": "Deployment has minimum availability.",
+          "lastTransitionTimestamp": 1763489926000
         }
       ],
       "kubernetesAnnotations": {
@@ -3465,11 +3452,11 @@
     "properties": {
       "detectedName": "my-otel-demo-loadgenerator",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -3487,23 +3474,23 @@
       ],
       "kubernetesConditions": [
         {
+          "type": "Progressing",
+          "status": "True",
+          "reason": "NewReplicaSetAvailable",
+          "message": "ReplicaSet \"my-otel-demo-loadgenerator-74f55fb9d5\" has successfully progressed.",
+          "lastTransitionTimestamp": 1763540302000
+        },
+        {
           "type": "Available",
           "status": "True",
           "reason": "MinimumReplicasAvailable",
           "message": "Deployment has minimum availability.",
-          "lastTransitionTimestamp": 1763394040000
-        },
-        {
-          "type": "Progressing",
-          "status": "False",
-          "reason": "ProgressDeadlineExceeded",
-          "message": "ReplicaSet \"my-otel-demo-loadgenerator-6df97b579c\" has timed out progressing.",
-          "lastTransitionTimestamp": 1763480211000
+          "lastTransitionTimestamp": 1763540731000
         }
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -3518,10 +3505,10 @@
     "properties": {
       "detectedName": "my-otel-demo-accountingservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -3542,7 +3529,7 @@
           "type": "Progressing",
           "status": "True",
           "reason": "NewReplicaSetAvailable",
-          "message": "ReplicaSet \"my-otel-demo-accountingservice-856959595\" has successfully progressed.",
+          "message": "ReplicaSet \"my-otel-demo-accountingservice-5855ff46d7\" has successfully progressed.",
           "lastTransitionTimestamp": 1737457133000
         },
         {
@@ -3550,12 +3537,12 @@
           "status": "True",
           "reason": "MinimumReplicasAvailable",
           "message": "Deployment has minimum availability.",
-          "lastTransitionTimestamp": 1763481362000
+          "lastTransitionTimestamp": 1763543852000
         }
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "7",
+        "deployment.kubernetes.io/revision": "10",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -3570,10 +3557,10 @@
     "properties": {
       "detectedName": "shipping",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_METRICS"
+        "API_MONITORING",
+        "CUSTOM_METRICS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -3622,11 +3609,11 @@
     "properties": {
       "detectedName": "my-otel-demo-quoteservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -3660,7 +3647,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -3675,11 +3662,11 @@
     "properties": {
       "detectedName": "my-otel-demo-frauddetectionservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -3700,7 +3687,7 @@
           "type": "Progressing",
           "status": "True",
           "reason": "NewReplicaSetAvailable",
-          "message": "ReplicaSet \"my-otel-demo-frauddetectionservice-74fddccdc9\" has successfully progressed.",
+          "message": "ReplicaSet \"my-otel-demo-frauddetectionservice-8478fc4bd5\" has successfully progressed.",
           "lastTransitionTimestamp": 1737457133000
         },
         {
@@ -3708,12 +3695,12 @@
           "status": "True",
           "reason": "MinimumReplicasAvailable",
           "message": "Deployment has minimum availability.",
-          "lastTransitionTimestamp": 1763477940000
+          "lastTransitionTimestamp": 1763541593000
         }
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "9",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -3736,11 +3723,11 @@
     "properties": {
       "detectedName": "product-catalog",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -3789,10 +3776,10 @@
     "properties": {
       "detectedName": "generate-load",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "argocd.argoproj.io/instance": "eks-playground-predictive-kubernetes-scaling"
@@ -3815,10 +3802,10 @@
     "properties": {
       "detectedName": "my-otel-demo-frauddetectionservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -3847,7 +3834,7 @@
           "status": "True",
           "reason": "MinimumReplicasAvailable",
           "message": "Deployment has minimum availability.",
-          "lastTransitionTimestamp": 1763393669000
+          "lastTransitionTimestamp": 1763499439000
         }
       ],
       "kubernetesAnnotations": {
@@ -3868,8 +3855,7 @@
       "detectedName": "csi-azurefile-node",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "kubernetes.azure.com/managedby": "aks",
@@ -3896,9 +3882,9 @@
     "properties": {
       "detectedName": "dynatrace-operator",
       "observedBy": [
-        "BUILTIN_METRICS",
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "dynatrace-operator-1.7.0",
@@ -3944,8 +3930,8 @@
     "properties": {
       "detectedName": "kube-controller-manager-ip-10-45-243-61",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "tier": "control-plane",
@@ -3973,8 +3959,8 @@
     "properties": {
       "detectedName": "aks-playground-activegate",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/created-by": "aks-playground",
@@ -4003,10 +3989,10 @@
     "properties": {
       "detectedName": "my-otel-demo-cartservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -4056,8 +4042,8 @@
       "detectedName": "cert-manager",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "cert-manager",
@@ -4101,11 +4087,11 @@
     "properties": {
       "detectedName": "currency",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -4154,11 +4140,11 @@
     "properties": {
       "detectedName": "checkout",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -4207,9 +4193,8 @@
     "properties": {
       "detectedName": "konnectivity-agent",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "konnectivity-agent",
@@ -4253,10 +4238,9 @@
       "detectedName": "dapr-scheduler-server",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "dapr-scheduler-server",
@@ -4285,10 +4269,10 @@
     "properties": {
       "detectedName": "rabbitmq",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -4328,15 +4312,15 @@
     "properties": {
       "detectedName": "eks-playground-oneagent",
       "observedBy": [
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/created-by": "eks-playground",
         "app.kubernetes.io/managed-by": "dynatrace-operator",
         "app.kubernetes.io/name": "oneagent",
-        "app.kubernetes.io/version": "1.325.47.20251022-093211",
+        "app.kubernetes.io/version": "1.325.64.20251114-153027",
         "app.kubernetes.io/component": "cloudnativefullstack"
       },
       "resourceUid": "41db1b3d-fa6b-4dc0-a2a3-82db7ebf37c3",
@@ -4345,8 +4329,8 @@
       ],
       "kubernetesConditions": [],
       "kubernetesAnnotations": {
-        "internal.operator.dynatrace.com/template-hash": "2805265398",
-        "deprecated.daemonset.template.generation": "8"
+        "internal.operator.dynatrace.com/template-hash": "882548917",
+        "deprecated.daemonset.template.generation": "9"
       },
       "resourceCreationTimestamp": 1754475742000,
       "namespaceName": "dynatrace"
@@ -4360,10 +4344,10 @@
     "properties": {
       "detectedName": "cert-manager-webhook",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "webhook",
@@ -4407,10 +4391,10 @@
     "properties": {
       "detectedName": "frontend",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -4451,8 +4435,7 @@
       "detectedName": "kube-proxy",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "component": "kube-proxy",
@@ -4480,11 +4463,11 @@
     "properties": {
       "detectedName": "cart",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -4533,10 +4516,10 @@
     "properties": {
       "detectedName": "contentcreator",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -4576,11 +4559,11 @@
     "properties": {
       "detectedName": "my-otel-demo-recommendationservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -4614,7 +4597,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -4629,11 +4612,11 @@
     "properties": {
       "detectedName": "frontend",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -4712,10 +4695,9 @@
       "detectedName": "dapr-sentry",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "dapr-sentry",
@@ -4761,11 +4743,11 @@
     "properties": {
       "detectedName": "ad",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -4814,8 +4796,8 @@
     "properties": {
       "detectedName": "kube-proxy",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "k8s-app": "kube-proxy"
@@ -4840,9 +4822,9 @@
     "properties": {
       "detectedName": "dynatrace-webhook",
       "observedBy": [
-        "BUILTIN_METRICS",
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "dynatrace-operator-1.7.0",
@@ -4887,10 +4869,10 @@
     "properties": {
       "detectedName": "obslab-release-validation-problem-enabler",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "resourceUid": "f9ae60f6-29ec-4c72-b034-621d53c38b8a",
       "cloudApplicationDeploymentTypes": [
@@ -4910,10 +4892,10 @@
     "properties": {
       "detectedName": "my-otel-demo-shippingservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -4963,10 +4945,9 @@
       "detectedName": "aks-playground-external-secrets-cert-controller",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "external-secrets-0.15.0",
@@ -5011,10 +4992,10 @@
     "properties": {
       "detectedName": "eks-3-playground-external-secrets-cert-controller",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "external-secrets-0.15.0",
@@ -5059,10 +5040,10 @@
     "properties": {
       "detectedName": "obslab-release-validation-problem-disabler",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "resourceUid": "b9159bee-cc86-4c86-b199-bdf196d9f881",
       "cloudApplicationDeploymentTypes": [
@@ -5082,11 +5063,11 @@
     "properties": {
       "detectedName": "opentelemetry-collector-daemonset-agent",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-collector-0.97.1",
@@ -5116,10 +5097,10 @@
     "properties": {
       "detectedName": "calculationservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -5168,8 +5149,7 @@
       "detectedName": "azure-cns",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "azure-cns",
@@ -5196,10 +5176,10 @@
     "properties": {
       "detectedName": "dynatrace-collector-opentelemetry-collector",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-collector-0.111.2",
@@ -5215,23 +5195,23 @@
       ],
       "kubernetesConditions": [
         {
+          "type": "Progressing",
+          "status": "True",
+          "reason": "NewReplicaSetAvailable",
+          "message": "ReplicaSet \"dynatrace-collector-opentelemetry-collector-7894b45796\" has successfully progressed.",
+          "lastTransitionTimestamp": 1737457122000
+        },
+        {
           "type": "Available",
           "status": "True",
           "reason": "MinimumReplicasAvailable",
           "message": "Deployment has minimum availability.",
-          "lastTransitionTimestamp": 1762971895000
-        },
-        {
-          "type": "Progressing",
-          "status": "True",
-          "reason": "NewReplicaSetAvailable",
-          "message": "ReplicaSet \"dynatrace-collector-opentelemetry-collector-6d9b79c7bf\" has successfully progressed.",
-          "lastTransitionTimestamp": 1737457122000
+          "lastTransitionTimestamp": 1763540723000
         }
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "dynatrace-collector",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457122000,
@@ -5246,10 +5226,10 @@
     "properties": {
       "detectedName": "obslab-log-problem-detection-problem-disabler",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "resourceUid": "eeda2b15-b76f-4392-b079-8b3dc15d17bb",
       "cloudApplicationDeploymentTypes": [
@@ -5269,10 +5249,10 @@
     "properties": {
       "detectedName": "my-otel-demo-checkoutservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -5321,8 +5301,8 @@
     "properties": {
       "detectedName": "dynatrace-operator",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "dynatrace-operator-1.7.0",
@@ -5369,10 +5349,10 @@
     "properties": {
       "detectedName": "anomaly-simulation",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "anomaly-simulation",
@@ -5416,10 +5396,10 @@
     "properties": {
       "detectedName": "accountservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -5467,10 +5447,10 @@
     "properties": {
       "detectedName": "my-otel-demo-valkey",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -5519,10 +5499,10 @@
     "properties": {
       "detectedName": "release-validation-load-test",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "resourceUid": "9522a11f-33f6-4af7-8689-c4c55ce33899",
       "cloudApplicationDeploymentTypes": [
@@ -5542,10 +5522,10 @@
     "properties": {
       "detectedName": "currencyservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -5593,10 +5573,10 @@
     "properties": {
       "detectedName": "unguard-like-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -5640,11 +5620,11 @@
     "properties": {
       "detectedName": "quote",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -5693,11 +5673,11 @@
     "properties": {
       "detectedName": "my-otel-demo-flagd",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -5715,23 +5695,23 @@
       ],
       "kubernetesConditions": [
         {
+          "type": "Available",
+          "status": "True",
+          "reason": "MinimumReplicasAvailable",
+          "message": "Deployment has minimum availability.",
+          "lastTransitionTimestamp": 1763482592000
+        },
+        {
           "type": "Progressing",
           "status": "True",
           "reason": "NewReplicaSetAvailable",
-          "message": "ReplicaSet \"my-otel-demo-flagd-675cf8797c\" has successfully progressed.",
+          "message": "ReplicaSet \"my-otel-demo-flagd-b4f7c4cc5\" has successfully progressed.",
           "lastTransitionTimestamp": 1758762405000
-        },
-        {
-          "type": "Available",
-          "status": "False",
-          "reason": "MinimumReplicasUnavailable",
-          "message": "Deployment does not have minimum availability.",
-          "lastTransitionTimestamp": 1763480016000
         }
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "2439",
+        "deployment.kubernetes.io/revision": "2448",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -5746,10 +5726,10 @@
     "properties": {
       "detectedName": "my-otel-demo-frontend",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -5798,10 +5778,10 @@
     "properties": {
       "detectedName": "unguard-envoy-proxy",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -5845,9 +5825,8 @@
     "properties": {
       "detectedName": "dynatrace-webhook",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "dynatrace-operator-1.7.0",
@@ -5892,10 +5871,10 @@
     "properties": {
       "detectedName": "frontendreverseproxy",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -5935,9 +5914,8 @@
     "properties": {
       "detectedName": "azure-wi-webhook-controller-manager",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/managed-by": "Helm",
@@ -5983,11 +5961,11 @@
     "properties": {
       "detectedName": "k8s-ephemeral-storage-metrics",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "k8s-ephemeral-storage-metrics-1.12.3",
@@ -6018,10 +5996,10 @@
     "properties": {
       "detectedName": "recommendationservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -6069,10 +6047,10 @@
     "properties": {
       "detectedName": "obslab-log-problem-detection-problem-enabler",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "resourceUid": "758852ac-7bdc-4268-8f47-a5f50325164e",
       "cloudApplicationDeploymentTypes": [
@@ -6092,10 +6070,10 @@
     "properties": {
       "detectedName": "frontendreverseproxy",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -6143,11 +6121,11 @@
     "properties": {
       "detectedName": "payment",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -6196,10 +6174,10 @@
     "properties": {
       "detectedName": "broker-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -6225,7 +6203,7 @@
         }
       ],
       "kubernetesAnnotations": {
-        "deployment.kubernetes.io/revision": "880",
+        "deployment.kubernetes.io/revision": "882",
         "problem-operator/high_cpu_usage": "off"
       },
       "resourceCreationTimestamp": 1692874612000,
@@ -6240,9 +6218,9 @@
     "properties": {
       "detectedName": "feature-flag-service",
       "observedBy": [
-        "BUILTIN_METRICS",
         "API_MONITORING",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -6282,11 +6260,11 @@
     "properties": {
       "detectedName": "kafka",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -6336,9 +6314,9 @@
       "detectedName": "alpine",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "argocd.argoproj.io/instance": "aks-playground-pvc-demo"
@@ -6367,11 +6345,11 @@
     "properties": {
       "detectedName": "my-otel-demo-paymentservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -6405,7 +6383,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -6420,13 +6398,13 @@
     "properties": {
       "detectedName": "adservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
-        "skaffold.dev/run-id": "c34ad69c-42ae-4b01-a414-6dccb6917c57"
+        "skaffold.dev/run-id": "1f15ffd1-c5f7-4aa1-9f5b-35b4a3d53030"
       },
       "resourceUid": "f799fe2b-4b71-4f6c-97c6-8c005e74adea",
       "cloudApplicationDeploymentTypes": [
@@ -6449,7 +6427,7 @@
         }
       ],
       "kubernetesAnnotations": {
-        "deployment.kubernetes.io/revision": "714"
+        "deployment.kubernetes.io/revision": "716"
       },
       "resourceCreationTimestamp": 1732016335000,
       "namespaceName": "prod"
@@ -6478,11 +6456,11 @@
     "properties": {
       "detectedName": "my-otel-demo-productcatalogservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -6516,7 +6494,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -6531,11 +6509,11 @@
     "properties": {
       "detectedName": "my-otel-demo-kafka",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -6569,7 +6547,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -6584,10 +6562,10 @@
     "properties": {
       "detectedName": "unguard-user-simulator",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -6615,10 +6593,10 @@
     "properties": {
       "detectedName": "third-party-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -6658,10 +6636,10 @@
     "properties": {
       "detectedName": "db",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -6701,10 +6679,10 @@
     "properties": {
       "detectedName": "unguard-membership-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -6748,10 +6726,10 @@
     "properties": {
       "detectedName": "cert-manager-cainjector",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "cainjector",
@@ -6796,10 +6774,9 @@
       "detectedName": "aks-playground-external-secrets-webhook",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "external-secrets-0.15.0",
@@ -6844,8 +6821,8 @@
     "properties": {
       "detectedName": "azure-cns-win",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app": "azure-cns-win",
@@ -6872,10 +6849,10 @@
     "properties": {
       "detectedName": "offerservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -6923,10 +6900,10 @@
     "properties": {
       "detectedName": "emailservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -6967,8 +6944,7 @@
       "detectedName": "dynatrace-operator",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "dynatrace-operator-1.7.0",
@@ -7014,10 +6990,10 @@
     "properties": {
       "detectedName": "manager",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -7057,10 +7033,10 @@
     "properties": {
       "detectedName": "shippingservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -7100,8 +7076,8 @@
     "properties": {
       "detectedName": "kube-scheduler-ip-10-45-243-61",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "tier": "control-plane",
@@ -7129,8 +7105,8 @@
     "properties": {
       "detectedName": "cloud-node-manager-windows",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "kubernetes.io/cluster-service": "true",
@@ -7159,8 +7135,8 @@
       "detectedName": "my-otel-demo-flagd",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -7209,11 +7185,11 @@
     "properties": {
       "detectedName": "recommendation",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -7262,10 +7238,10 @@
     "properties": {
       "detectedName": "engine",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "77cc92ec-fad4-41e0-bb10-ffa72aeacb2d"
@@ -7306,14 +7282,14 @@
       "detectedName": "flagd-restart",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "argocd.argoproj.io/instance": "aks-playground-astroshop-flagd-config"
       },
-      "resourceUid": "78892335-be99-4d95-a233-a25c848e7c6a",
+      "resourceUid": "d3e31143-a3df-4b9a-8917-c62d970d4cf7",
       "cloudApplicationDeploymentTypes": [
         "KUBERNETES_JOB"
       ],
@@ -7322,7 +7298,7 @@
         "argocd.argoproj.io/hook-delete-policy": "HookSucceeded",
         "argocd.argoproj.io/hook": "PostSync"
       },
-      "resourceCreationTimestamp": 1763465558000,
+      "resourceCreationTimestamp": 1763530362000,
       "namespaceName": "astroshop"
     },
     "tags": []
@@ -7334,9 +7310,9 @@
     "properties": {
       "detectedName": "ebs-csi-controller",
       "observedBy": [
-        "BUILTIN_METRICS",
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/managed-by": "EKS",
@@ -7379,11 +7355,11 @@
     "properties": {
       "detectedName": "my-otel-demo-adservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -7404,20 +7380,20 @@
           "type": "Progressing",
           "status": "True",
           "reason": "NewReplicaSetAvailable",
-          "message": "ReplicaSet \"my-otel-demo-adservice-7547b785b6\" has successfully progressed.",
+          "message": "ReplicaSet \"my-otel-demo-adservice-7c856c558b\" has successfully progressed.",
           "lastTransitionTimestamp": 1737457133000
         },
         {
           "type": "Available",
-          "status": "False",
-          "reason": "MinimumReplicasUnavailable",
-          "message": "Deployment does not have minimum availability.",
-          "lastTransitionTimestamp": 1763481145000
+          "status": "True",
+          "reason": "MinimumReplicasAvailable",
+          "message": "Deployment has minimum availability.",
+          "lastTransitionTimestamp": 1763541650000
         }
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -7432,9 +7408,9 @@
     "properties": {
       "detectedName": "kube-proxy",
       "observedBy": [
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "eks.amazonaws.com/component": "kube-proxy",
@@ -7460,10 +7436,10 @@
     "properties": {
       "detectedName": "unguard-payment-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/name": "payment-service",
@@ -7507,10 +7483,10 @@
     "properties": {
       "detectedName": "my-otel-demo-quoteservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.4",
@@ -7559,8 +7535,8 @@
     "properties": {
       "detectedName": "dt-cloudbleed-kspm-lima-node-config-collector",
       "observedBy": [
-        "BUILTIN_METRICS",
-        "API_MONITORING"
+        "API_MONITORING",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/created-by": "dt-cloudbleed-kspm-lima",
@@ -7589,9 +7565,9 @@
     "properties": {
       "detectedName": "valkey-cart",
       "observedBy": [
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -7639,10 +7615,10 @@
     "properties": {
       "detectedName": "unguard-ad-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -7686,9 +7662,9 @@
     "properties": {
       "detectedName": "aws-load-balancer-controller",
       "observedBy": [
+        "CUSTOM_EVENTS",
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/name": "aws-load-balancer-controller",
@@ -7729,10 +7705,10 @@
     "properties": {
       "detectedName": "otelcollectorservice",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "skaffold.dev/run-id": "f7761fd6-c95c-4435-820f-6dc7ad507fb8"
@@ -7772,10 +7748,10 @@
     "properties": {
       "detectedName": "unguard-microblog-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -7819,11 +7795,11 @@
     "properties": {
       "detectedName": "my-otel-demo-frontend",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -7857,7 +7833,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,
@@ -7873,10 +7849,9 @@
       "detectedName": "ingress-nginx-controller",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "ingress-nginx-4.12.0",
@@ -7927,8 +7902,7 @@
       "detectedName": "cloud-node-manager",
       "observedBy": [
         "API_MONITORING",
-        "BUILTIN_METRICS",
-        "CUSTOM_EVENTS"
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "kubernetes.io/cluster-service": "true",
@@ -7956,10 +7930,10 @@
     "properties": {
       "detectedName": "unguard-proxy-service",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "app.kubernetes.io/part-of": "unguard",
@@ -8003,10 +7977,10 @@
     "properties": {
       "detectedName": "unguard-mariadb",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "mariadb-11.5.7",
@@ -8036,11 +8010,11 @@
     "properties": {
       "detectedName": "fraud-detection",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
+        "API_MONITORING",
         "CUSTOM_METRICS",
-        "CUSTOM_LOGS"
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.37.0",
@@ -8089,10 +8063,10 @@
     "properties": {
       "detectedName": "my-otel-demo-frontendproxy",
       "observedBy": [
-        "API_MONITORING",
-        "BUILTIN_METRICS",
         "CUSTOM_EVENTS",
-        "CUSTOM_LOGS"
+        "API_MONITORING",
+        "CUSTOM_LOGS",
+        "BUILTIN_METRICS"
       ],
       "cloudApplicationLabels": {
         "helm.sh/chart": "opentelemetry-demo-0.33.8",
@@ -8126,7 +8100,7 @@
       ],
       "kubernetesAnnotations": {
         "meta.helm.sh/release-name": "my-otel-demo",
-        "deployment.kubernetes.io/revision": "6",
+        "deployment.kubernetes.io/revision": "8",
         "meta.helm.sh/release-namespace": "obslab-log-problem-detection"
       },
       "resourceCreationTimestamp": 1737457133000,

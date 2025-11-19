@@ -158,7 +158,7 @@ class DynatraceClient:
         deployment_entity_id: str,
         time_from: Optional[str] = None,
         time_to: Optional[str] = None,
-        include_heap: bool = False
+        include_container_memory: bool = True
     ) -> Tuple[Dict[str, float], Dict[str, float], Optional[Dict[str, float]], int]:
         """
         Get CPU and Memory metrics for a deployment by aggregating pod metrics
@@ -167,13 +167,13 @@ class DynatraceClient:
             deployment_entity_id: Dynatrace entity ID for the deployment
             time_from: Start time (default: 24 hours ago)
             time_to: End time (default: now)
-            include_heap: Whether to include JVM heap memory metrics (default: False)
+            include_container_memory: Whether to include JVM heap memory metrics (default: False)
 
         Returns:
-            Tuple of (cpu_metrics, memory_metrics, heap_metrics, pod_count)
+            Tuple of (cpu_metrics, memory_metrics, container_memory_metrics, pod_count)
             cpu_metrics: {'min': float, 'max': float} in millicores
             memory_metrics: {'min': float, 'max': float} in bytes
-            heap_metrics: {'min': float, 'max': float} in bytes (None if include_heap=False)
+            container_memory_metrics: {'min': float, 'max': float} in bytes (None if include_container_memory=False)
             pod_count: number of pods
         """
         if not time_from:
@@ -242,10 +242,10 @@ class DynatraceClient:
         else:
             aggregated_memory = {'min': 0.0, 'max': 0.0}
 
-        # Fetch JVM heap metrics if requested
-        heap_metrics = None
-        if include_heap:
-            heap_metrics = self._get_jvm_heap_metrics(
+        # Fetch container memory metrics if requested
+        container_memory_metrics = None
+        if include_container_memory:
+            container_memory_metrics = self._get_container_memory_metrics(
                 deployment_entity_id=deployment_entity_id,
                 time_from=time_from,
                 time_to=time_to
@@ -254,7 +254,7 @@ class DynatraceClient:
         print(f"DEBUG: Aggregated CPU: {aggregated_cpu}")
         print(f"DEBUG: Aggregated Memory: {aggregated_memory}")
 
-        return aggregated_cpu, aggregated_memory, heap_metrics, pod_count
+        return aggregated_cpu, aggregated_memory, container_memory_metrics, pod_count
 
     def _get_metric_stats(
         self,
@@ -366,7 +366,7 @@ class DynatraceClient:
         pods = self._get_pods_for_deployment(deployment_entity_id)
         return len(pods)
 
-    def _get_jvm_heap_metrics(
+    def _get_container_memory_metrics(
         self,
         deployment_entity_id: str,
         time_from: str,

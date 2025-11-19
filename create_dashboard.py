@@ -17,7 +17,7 @@ def create_deployment_dashboard(
     Args:
         cluster_name: Kubernetes cluster name
         namespace: Kubernetes namespace
-        include_heap: Include JVM heap memory tiles
+        include_heap: Include container memory (RSS) tiles showing resident set bytes
     """
     client = DynatraceClient()
 
@@ -181,17 +181,17 @@ def create_deployment_dashboard(
         }
         tiles.append(memory_tile)
 
-        # JVM Heap Tile (if requested)
+        # Container Memory Tile (if requested)
         if include_heap:
             tile_col += 1
             if tile_col >= 4:
                 tile_col = 0
                 tile_row += 1
 
-            # We need to get process group for this deployment
-            # For simplicity, we'll create a tile that filters by deployment
-            heap_tile = {
-                "name": f"{deployment_name} - JVM Heap",
+            # Container memory tile using resident set bytes
+            # This shows actual container memory usage (RSS) which includes JVM heap for Java apps
+            memory_detail_tile = {
+                "name": f"{deployment_name} - Container Memory (RSS)",
                 "tileType": "DATA_EXPLORER",
                 "configured": True,
                 "bounds": {
@@ -201,18 +201,23 @@ def create_deployment_dashboard(
                     "height": 304
                 },
                 "tileFilter": {},
-                "customName": f"{deployment_name} - JVM Heap Memory",
+                "customName": f"{deployment_name} - Container Memory (Resident Set)",
                 "queries": [
                     {
                         "id": "A",
-                        "metric": "builtin:tech.generic.mem.usedHeap",
+                        "metric": "builtin:containers.memory.residentSetBytes",
                         "spaceAggregation": "AVG",
                         "timeAggregation": "DEFAULT",
-                        "splitBy": ["dt.entity.process_group"],
+                        "splitBy": [],
                         "filterBy": {
                             "filterOperator": "AND",
                             "nestedFilters": [],
-                            "criteria": []
+                            "criteria": [
+                                {
+                                    "value": entity_id,
+                                    "evaluator": "IN"
+                                }
+                            ]
                         },
                         "enabled": True
                     }
@@ -236,7 +241,7 @@ def create_deployment_dashboard(
                         },
                         "yAxes": [
                             {
-                                "displayName": "Heap Memory (bytes)",
+                                "displayName": "Memory (bytes)",
                                 "visible": True,
                                 "min": "AUTO",
                                 "max": "AUTO",
@@ -247,7 +252,7 @@ def create_deployment_dashboard(
                     }
                 }
             }
-            tiles.append(heap_tile)
+            tiles.append(memory_detail_tile)
 
         # Move to next position
         tile_col += 1
@@ -304,7 +309,7 @@ def main():
     parser.add_argument(
         '--include-heap',
         action='store_true',
-        help='Include JVM heap memory tiles'
+        help='Include container memory (RSS) tiles - shows resident set bytes which includes heap for Java apps'
     )
 
     args = parser.parse_args()

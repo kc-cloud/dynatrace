@@ -50,7 +50,7 @@ def get_deployment_metrics(
     hours_back: int = 24,
     output_format: str = 'table',
     output_file: str = None,
-    include_heap: bool = False
+    include_container_memory: bool = True
 ):
     """
     Get deployment metrics for a specific cluster and namespace
@@ -61,7 +61,7 @@ def get_deployment_metrics(
         hours_back: Number of hours to look back for metrics (default: 24)
         output_format: Output format - 'table', 'json', or 'csv'
         output_file: Output file path (required for CSV format)
-        include_heap: Include JVM heap memory metrics (default: False)
+        include_container_memory: Include JVM heap memory metrics (default: False)
     """
     client = DynatraceClient()
 
@@ -88,11 +88,11 @@ def get_deployment_metrics(
 
         print(f"Fetching metrics for deployment: {deployment_name}...")
 
-        cpu_metrics, memory_metrics, heap_metrics, pod_count = client.get_workload_metrics(
+        cpu_metrics, memory_metrics, container_memory_metrics, pod_count = client.get_workload_metrics(
             deployment_entity_id=entity_id,
             time_from=time_from.strftime('%Y-%m-%dT%H:%M:%S'),
             time_to=time_to.strftime('%Y-%m-%dT%H:%M:%S'),
-            include_heap=include_heap
+            include_container_memory=include_container_memory
         )
 
         result = {
@@ -114,12 +114,12 @@ def get_deployment_metrics(
             }
         }
 
-        if include_heap and heap_metrics:
+        if include_container_memory and container_memory_metrics:
             result['heap'] = {
-                'min': heap_metrics['min'],
-                'max': heap_metrics['max'],
-                'min_formatted': format_memory(heap_metrics['min']),
-                'max_formatted': format_memory(heap_metrics['max'])
+                'min': container_memory_metrics['min'],
+                'max': container_memory_metrics['max'],
+                'min_formatted': format_memory(container_memory_metrics['min']),
+                'max_formatted': format_memory(container_memory_metrics['max'])
             }
 
         results.append(result)
@@ -139,7 +139,7 @@ def get_deployment_metrics(
                 'memory_usage_max',
             ]
 
-            if include_heap:
+            if include_container_memory:
                 fieldnames.extend([
                     'heap_usage_min',
                     'heap_usage_max'
@@ -161,7 +161,7 @@ def get_deployment_metrics(
                     'number_of_pods': result['pod_count']
                 }
 
-                if include_heap and 'heap' in result:
+                if include_container_memory and 'heap' in result:
                     row['heap_usage_min'] = result['heap']['min']
                     row['heap_usage_max'] = result['heap']['max']
 
@@ -173,7 +173,7 @@ def get_deployment_metrics(
         print("\n" + json.dumps(results, indent=2))
     else:
         # Table output
-        if include_heap:
+        if include_container_memory:
             sep_line = "=" * 152
             header = (f"{'Deployment':<30} | {'Pods':<6} | {'CPU Min':<15} | {'CPU Max':<15} | "
                      f"{'Memory Min':<15} | {'Memory Max':<15} | {'Heap Min':<15} | {'Heap Max':<15}")
@@ -195,7 +195,7 @@ def get_deployment_metrics(
                 f"{result['memory']['max_formatted']:<15}"
             )
 
-            if include_heap and 'heap' in result:
+            if include_container_memory and 'heap' in result:
                 line += (
                     f" | {result['heap']['min_formatted']:<15} | "
                     f"{result['heap']['max_formatted']:<15}"
@@ -257,8 +257,7 @@ def main():
             namespace=args.namespace,
             hours_back=args.hours,
             output_format=args.format,
-            output_file=args.output,
-            include_heap=args.include_heap
+            output_file=args.output
         )
     except Exception as e:
         print(f"Error: {e}")
